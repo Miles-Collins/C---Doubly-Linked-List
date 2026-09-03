@@ -142,17 +142,80 @@ void DoublyLinkedList::removeTailNode() {
   temp = nullptr;
 }
 
+/**
+ * @brief Moves a node with the specified value to the head of the list.
+ * 
+ * If the list is empty, just return. Then traverse the list to find the node with the specified value.
+ * If the node is found, remove it from its current position and insert it at the head of the list.
+ * If the node is already at the head, just return.
+ * If the node is at the tail, update the tail pointer and remove it from its current position.
+ * Otherwise, update the previous and next pointers of the adjacent nodes to remove it from its current position.
+ * Finally, insert it at the head of the list.
+ * 
+ * @param value The value of the node to move to the head.
+ * @return void
+ */
 void DoublyLinkedList::moveNodeToHead(int value) {
-  return;
+  /// Check is list is empty for quick exit
+  if(isEmpty()) {return;}
+
+  DllNode* current = head;
+  /// With the current pointer, traverse the list to find the node with the value.
+  while(current != nullptr) {
+
+    /// If I find the node with the value, I can then go in and move it to the head of the list.
+    if(current->key == value) {
+
+      /// Quick check to see if the node is the head, if it is just return;
+      if(current == head) {return;}
+
+      /// Quick check to not have to traverse the list to find the tail node
+      /// If it's the tail set the tail to the previous node, and then set the new tail's next pointer to nullptr
+      if(current == tail) {
+        tail = current->prev;
+        tail->next = nullptr;
+      /// If it's not the tail, then I can safely update the prev/next pointers of the adjacent current node to "remove" it from the list
+      } else {
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+      }
+      /// Lastly I can now safely insert teh current node into the head of the list by updating the previous head to be the next node of the current node
+      /// Make sure to set the "new" head to have its previous pointer set to nullptr, and set the head node to the "current" node
+        head->prev = current;
+        current->next = head;
+        current->prev = nullptr;
+        head = current;
+
+        /// Lastly make sure to return to not keep iterating through the list since I found the node and moved it to the head.
+        return;
+    }
+    current = current->next;
+  }
 }
 
 void DoublyLinkedList::moveNodeToTail(int value) {return;}
 
-void DoublyLinkedList::clear() {return;}
+void DoublyLinkedList::clear() {
+  while(!isEmpty()) {
+    removeHeaderNode();
+  }
+}
 
-void DoublyLinkedList::printList() {return;}
+void DoublyLinkedList::printList() {
+  DllNode* current = head;
+  while(current != nullptr) {
+    current->printNode();
+    current = current->next;
+  }
+}
 
-void DoublyLinkedList::reversePrintList() {return;}
+void DoublyLinkedList::reversePrintList() {
+  DllNode* current = tail;
+  while(current != nullptr) {
+    current->printNode();
+    current = current->prev;
+  }
+}
 
 
 
