@@ -127,7 +127,19 @@ void DoublyLinkedList::removeHeaderNode() {
 
 
 void DoublyLinkedList::removeTailNode() {
-  return;
+  if(isEmpty()) {return;}
+  if(head == tail) {
+    delete head;
+    head = nullptr;
+    tail = nullptr;
+    return;
+  }
+
+  DllNode* temp = tail;
+  tail = tail->prev;
+  tail->next = nullptr;
+  delete temp;
+  temp = nullptr;
 }
 
 void DoublyLinkedList::moveNodeToHead(int value) {
