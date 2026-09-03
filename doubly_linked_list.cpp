@@ -31,6 +31,16 @@ void DoublyLinkedList::insertAtHead(int value) {
   }
 }
 
+/**
+ * @brief Inserts a new node with the specified value at the tail of the list.
+ * 
+ * Create a pointer to a new DllNode with the given value. Then check if the list is empty. If it is, set both head and tail to the new node.
+ * If the list isn't empty, set the new node's previous pointer to the tail, then set the tail's next pointer to the new node.
+ * Finally, update the tail pointer to point to the new node.
+ * 
+ * @param value The value to be inserted.
+ * @return void 
+ */
 void DoublyLinkedList::insertAtTail(int value) {
   DllNode* newNode = new DllNode(value);
 
@@ -86,10 +96,35 @@ void DoublyLinkedList::remove(int value) {
   }
 }
 
+/**
+ * @brief Removes the head node from the list.
+ * 
+ * If the list is empty, just return. Then check if the list has only 1 node, if it does delete the head and set head and tail to nullptr to prevent dangling
+ * If list contains more than 1 node, set a temporary pointer to the head node, then update the head pointer to point to the next node in the list
+ * Finally, delete the temporary pointer to free the memory of the old head node.
+ * 
+ * @param void
+ * @return void
+ */
 void DoublyLinkedList::removeHeaderNode() {
+  /// If the list is empty, there's nothing to remove so just return.
   if (isEmpty()) { return; }
-  return;
-}
+  /// Quick exit -> if the list only has 1 node, delete head, then make sure to set head and tail to nullptr to avoid dangling pointers.
+  if(head == tail) {
+    delete head;
+    head = nullptr;
+    tail = nullptr;
+    return;
+  }
+
+  /// Now that we know the list has more than 1 node, set a temporary pointer to the head node, then update the head pointer to point to the next node in the list.
+  DllNode* temp = head;
+  head = head->next;
+  head->prev = nullptr;
+  delete temp;
+  temp = nullptr;
+  }
+
 
 void DoublyLinkedList::removeTailNode() {
   return;
