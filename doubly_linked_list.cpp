@@ -30,22 +30,41 @@ void DoublyLinkedList::insertAtHead(int value) {
   }
 }
 
-void DoublyLinkedList::insertAtTail(int value) {}
-void DoublyLinkedList::remove(int value) {}
+void DoublyLinkedList::insertAtTail(int value) {
+  DllNode* newNode = new DllNode(value);
 
-void DoublyLinkedList::removeHeaderNode() {}
+  if (isEmpty()) {
+    head = newNode;
+    tail = newNode;
+  } else {
+    newNode->prev = tail;
+    tail->next = newNode;
+    tail = newNode;
+  }
+}
+void DoublyLinkedList::remove(int value) {
+  return;
+}
 
-void DoublyLinkedList::removeTailNode() {}
+void DoublyLinkedList::removeHeaderNode() {
+  return;
+}
 
-void DoublyLinkedList::moveNodeToHead(int value) {}
+void DoublyLinkedList::removeTailNode() {
+  return;
+}
 
-void DoublyLinkedList::moveNodeToTail(int value) {}
+void DoublyLinkedList::moveNodeToHead(int value) {
+  return;
+}
 
-void DoublyLinkedList::clear() {}
+void DoublyLinkedList::moveNodeToTail(int value) {return;}
 
-void DoublyLinkedList::printList() {}
+void DoublyLinkedList::clear() {return;}
 
-void DoublyLinkedList::reversePrintList() {}
+void DoublyLinkedList::printList() {return;}
+
+void DoublyLinkedList::reversePrintList() {return;}
 
 
 
