@@ -24,7 +24,9 @@ void DoublyLinkedList::insertAtHead(int value) {
     head = newNode;
     tail = newNode;
   } else {
-    
+    newNode->next = head;
+    head->prev = newNode;
+    head = newNode;
   }
 }
 
