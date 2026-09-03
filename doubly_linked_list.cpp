@@ -7,6 +7,7 @@
 
 #include "doubly_linked_list.h"
 #include <iostream>
+#include <stdexcept>
 
 DoublyLinkedList::DoublyLinkedList() {
   head = nullptr;
@@ -42,11 +43,51 @@ void DoublyLinkedList::insertAtTail(int value) {
     tail = newNode;
   }
 }
+
+/**
+ * @brief Removes a node with the specified value from the list.
+ * 
+ * Checks for an empty list, and delegates the dangling pointer issues to removeHeaderNode() and removeTailNode() if the head or tail is the node to remove. 
+ * Otherwise, it traverses the list to find the node and removes it by updating the previous and next pointers of adjacent nodes.
+ * 
+ * @param value The value of the node to be removed.
+ * @return void
+ */
 void DoublyLinkedList::remove(int value) {
-  return;
+  /// First check if empty
+  if (isEmpty()) { return; }
+
+  /// I will have the removeHeaderNode() take care of the possible dangling pointer issue 
+  /// if the head is the node to remove, and the removeTailNode() take care of the possible dangling pointer issue if the tail is the node to remove.
+  if (head->key == value) { removeHeaderNode(); return;}
+
+  /// Same as above, but for the tail node.
+  if (tail->key == value) { removeTailNode(); return; }
+
+  /// Traverse the list to find the node with the given value and remove it.
+  DllNode* current = head->next;
+  while (current != nullptr) {
+    if (current->key == value) {
+        /// If I find the node, update the previous node's next pointer to point to the next node, 
+        /// since the current node is being removed. Since we know it isn't the head, I can safely update the previous node's next pointer.
+        current->prev->next = current->next;
+
+        /// Now do the same for the next node's previous pointer. Since we know the current node can't be the tail, 
+        /// I can safely update the next node's previous pointer.
+        current->next->prev = current->prev;
+
+        /// Now I can safely delete the current node and return.
+        delete current;
+        return;
+    }
+
+    /// Assign current to be the next node in the list, so I can continue traversing the list.
+    current = current->next;
+  }
 }
 
 void DoublyLinkedList::removeHeaderNode() {
+  if (isEmpty()) { return; }
   return;
 }
 
