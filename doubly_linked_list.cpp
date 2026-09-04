@@ -7,19 +7,47 @@
 
 #include "doubly_linked_list.h"
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 
+/**
+ * @brief Constructs an empty doubly linked list.
+ *
+ * Initializes both the head and tail pointers to nullptr to indicate
+ * that the list contains no nodes upon creation.
+ */
 DoublyLinkedList::DoublyLinkedList() {
   head = nullptr;
   tail = nullptr;
 }
 
-bool DoublyLinkedList::isEmpty() {
+/**
+ * @brief Destroys the doubly linked list.
+ */
+DoublyLinkedList::~DoublyLinkedList() {
+  clear();
+}
+
+/**
+ * @brief Checks if the doubly linked list is empty.
+ *
+ * @return true if head is nullptr, false otherwise.
+ */
+bool DoublyLinkedList::isEmpty() const {
   return head == nullptr;
 }
 
+/**
+ * @brief Inserts a new node with the specified value at the head of the list.
+ *
+ * Allocates a new node with the given value. If the list is empty, sets both head
+ * and tail to the new node. Otherwise, links the new node before the current head
+ * and updates the head pointer.
+ *
+ * @param value The integer value to insert at the front.
+ */
 void DoublyLinkedList::insertAtHead(int value) {
-  DllNode* newNode = new DllNode(value);
+  auto* newNode = new DllNode(value);
 
   if (isEmpty()) {
     head = newNode;
@@ -33,16 +61,15 @@ void DoublyLinkedList::insertAtHead(int value) {
 
 /**
  * @brief Inserts a new node with the specified value at the tail of the list.
- * 
- * Create a pointer to a new DllNode with the given value. Then check if the list is empty. If it is, set both head and tail to the new node.
- * If the list isn't empty, set the new node's previous pointer to the tail, then set the tail's next pointer to the new node.
- * Finally, update the tail pointer to point to the new node.
- * 
- * @param value The value to be inserted.
- * @return void 
+ *
+ * Allocates a new node with the given value. If the list is empty, sets both head
+ * and tail to the new node. Otherwise, links the new node after the current tail
+ * and updates the tail pointer.
+ *
+ * @param value The integer value to insert at the end.
  */
 void DoublyLinkedList::insertAtTail(int value) {
-  DllNode* newNode = new DllNode(value);
+  auto* newNode = new DllNode(value);
 
   if (isEmpty()) {
     head = newNode;
@@ -55,153 +82,158 @@ void DoublyLinkedList::insertAtTail(int value) {
 }
 
 /**
- * @brief Removes a node with the specified value from the list.
- * 
- * Checks for an empty list, and delegates the dangling pointer issues to removeHeaderNode() and removeTailNode() if the head or tail is the node to remove. 
- * Otherwise, it traverses the list to find the node and removes it by updating the previous and next pointers of adjacent nodes.
- * 
- * @param value The value of the node to be removed.
- * @return void
+ * @brief Removes the first node containing the specified value from the list.
+ *
+ * Checks if the list is empty. Delegates removal to removeHeaderNode() or
+ * removeTailNode() if the matching value resides at the head or tail. Otherwise,
+ * traverses the inner nodes, updates surrounding pointers, and deletes the node.
+ *
+ * @param value The integer value of the node to remove.
  */
 void DoublyLinkedList::remove(int value) {
   /// First check if empty
   if (isEmpty()) { return; }
 
-  /// I will have the removeHeaderNode() take care of the possible dangling pointer issue 
-  /// if the head is the node to remove, and the removeTailNode() take care of the possible dangling pointer issue if the tail is the node to remove.
-  if (head->key == value) { removeHeaderNode(); return;}
+  /// Handle head removal using helper function
+  if (head->key == value) { removeHeaderNode(); return; }
 
-  /// Same as above, but for the tail node.
+  /// Handle tail removal using helper function
   if (tail->key == value) { removeTailNode(); return; }
 
   /// Traverse the list to find the node with the given value and remove it.
   DllNode* current = head->next;
   while (current != nullptr) {
     if (current->key == value) {
-        /// If I find the node, update the previous node's next pointer to point to the next node, 
-        /// since the current node is being removed. Since we know it isn't the head, I can safely update the previous node's next pointer.
+        /// Detach node from previous neighbor
         current->prev->next = current->next;
 
-        /// Now do the same for the next node's previous pointer. Since we know the current node can't be the tail, 
-        /// I can safely update the next node's previous pointer.
+        /// Detach node from next neighbor
         current->next->prev = current->prev;
 
-        /// Now I can safely delete the current node and return.
+        /// Delete node and exit
         delete current;
         return;
     }
 
-    /// Assign current to be the next node in the list, so I can continue traversing the list.
+    /// Advance to the next node
     current = current->next;
   }
 }
 
 /**
- * @brief Removes the head node from the list.
- * 
- * If the list is empty, just return. Then check if the list has only 1 node, if it does delete the head and set head and tail to nullptr to prevent dangling
- * If list contains more than 1 node, set a temporary pointer to the head node, then update the head pointer to point to the next node in the list
- * Finally, delete the temporary pointer to free the memory of the old head node.
- * 
- * @param void
- * @return void
- */
-void DoublyLinkedList::removeHeaderNode() {
-  /// If the list is empty, there's nothing to remove so just return.
-  if (isEmpty()) { return; }
-  /// Quick exit -> if the list only has 1 node, delete head, then make sure to set head and tail to nullptr to avoid dangling pointers.
-  if(head == tail) {
-    delete head;
-    head = nullptr;
-    tail = nullptr;
-    return;
-  }
-
-  /// Now that we know the list has more than 1 node, set a temporary pointer to the head node, then update the head pointer to point to the next node in the list.
-  DllNode* temp = head;
-  head = head->next;
-  head->prev = nullptr;
-  delete temp;
-  temp = nullptr;
-  }
-
-
-void DoublyLinkedList::removeTailNode() {
-  if(isEmpty()) {return;}
-  if(head == tail) {
-    delete head;
-    head = nullptr;
-    tail = nullptr;
-    return;
-  }
-
-  DllNode* temp = tail;
-  tail = tail->prev;
-  tail->next = nullptr;
-  delete temp;
-  temp = nullptr;
-}
-
-/**
  * @brief Moves a node with the specified value to the head of the list.
- * 
- * If the list is empty, just return. Then traverse the list to find the node with the specified value.
- * If the node is found, remove it from its current position and insert it at the head of the list.
- * If the node is already at the head, just return.
- * If the node is at the tail, update the tail pointer and remove it from its current position.
- * Otherwise, update the previous and next pointers of the adjacent nodes to remove it from its current position.
- * Finally, insert it at the head of the list.
- * 
- * @param value The value of the node to move to the head.
- * @return void
+ *
+ * Traverses the list starting from the head to search for the node with the target value:
+ * - Returns immediately if the list is empty or the matching node is already at the head.
+ * - If the node is the current tail, detaches it and updates the tail to the previous node.
+ * - If the node is in the middle, detaches it by re-linking its adjacent nodes.
+ * - Re-inserts the detached node as the new head and updates the list pointers.
+ *
+ * If no node matches the value, no modifications are made.
+ *
+ * @param value The key of the node to move to the head.
  */
 void DoublyLinkedList::moveNodeToHead(int value) {
-  /// Check is list is empty for quick exit
+  /// Check if list is empty for quick exit
   if(isEmpty()) {return;}
 
   DllNode* current = head;
-  /// With the current pointer, traverse the list to find the node with the value.
+  /// Traverse the list starting from the head to find the node with the value.
   while(current != nullptr) {
 
-    /// If I find the node with the value, I can then go in and move it to the head of the list.
+    /// If the node is found, move it to the head of the list.
     if(current->key == value) {
 
-      /// Quick check to see if the node is the head, if it is just return;
+      /// Quick check to see if the node is already the head.
       if(current == head) {return;}
 
-      /// Quick check to not have to traverse the list to find the tail node
-      /// If it's the tail set the tail to the previous node, and then set the new tail's next pointer to nullptr
+      /// If it's the tail, update the tail pointer and disconnect the current node.
       if(current == tail) {
         tail = current->prev;
         tail->next = nullptr;
-      /// If it's not the tail, then I can safely update the prev/next pointers of the adjacent current node to "remove" it from the list
+        /// Otherwise, re-link adjacent nodes to detach current from the middle.
       } else {
         current->prev->next = current->next;
         current->next->prev = current->prev;
       }
-      /// Lastly I can now safely insert teh current node into the head of the list by updating the previous head to be the next node of the current node
-      /// Make sure to set the "new" head to have its previous pointer set to nullptr, and set the head node to the "current" node
-        head->prev = current;
-        current->next = head;
-        current->prev = nullptr;
-        head = current;
 
-        /// Lastly make sure to return to not keep iterating through the list since I found the node and moved it to the head.
-        return;
+      /// Insert the detached node as the new head of the list.
+      head->prev = current;
+      current->next = head;
+      current->prev = nullptr;
+      head = current;
+
+      /// Exit after moving the node to avoid unnecessary iteration.
+      return;
     }
     current = current->next;
   }
 }
 
-void DoublyLinkedList::moveNodeToTail(int value) {return;}
+/**
+ * @brief Finds a node by its value and relocates it to the tail of the list.
+ *
+ * Traverses the doubly linked list starting from the tail. If a node matching the
+ * specified value is found:
+ * - Returns immediately if the node is already at the tail.
+ * - Detaches the node from its current position (updating adjacent pointers).
+ * - Appends the detached node to the end of the list and updates the tail pointer.
+ *
+ * If the list is empty or the value is not present, no changes are made.
+ *
+ * @param value The key of the node to move to the tail.
+ */
+void DoublyLinkedList::moveNodeToTail(int value) {
+  if (isEmpty()) { return; }
 
+  DllNode* current = tail;
+
+  while(current != nullptr) {
+    if(current->key == value) {
+      if(current == tail) {return;}
+
+      if(current == head) {
+        head = current->next;
+        head-> prev = nullptr;
+      } else {
+        current->next->prev = current->prev;
+        current->prev->next = current->next;
+      }
+
+      tail->next = current;
+      current->prev = tail;
+      current->next = nullptr;
+      tail = current;
+      return;
+    }
+    current = current->prev;
+  }
+}
+
+/**
+ * @brief Clears the entire doubly linked list by removing all nodes.
+ *
+ * Continuously checks if the list is empty with a while loop. As long as the list contains
+ * nodes, it calls removeHeaderNode() to remove each node from the front until no nodes remain.
+ *
+ * @return void
+ */
 void DoublyLinkedList::clear() {
   while(!isEmpty()) {
     removeHeaderNode();
   }
 }
 
-void DoublyLinkedList::printList() {
+/**
+ * @brief Prints the entire doubly linked list from head to tail.
+ *
+ * Creates a pointer starting at the head of the list. Iterates forward through
+ * the list using a while loop, calling printNode() on each node and updating the
+ * pointer to current->next until current reaches nullptr.
+ *
+ * @return void
+ */
+void DoublyLinkedList::printList() const {
   DllNode* current = head;
   while(current != nullptr) {
     current->printNode();
@@ -209,7 +241,16 @@ void DoublyLinkedList::printList() {
   }
 }
 
-void DoublyLinkedList::reversePrintList() {
+/**
+ * @brief Prints the entire doubly linked list in reverse order from tail to head.
+ *
+ * Creates a pointer starting at the tail of the list. Iterates backward through
+ * the list using a while loop, calling printNode() on each node and updating the
+ * pointer to current->prev until current reaches nullptr.
+ *
+ * @return void
+ */
+void DoublyLinkedList::reversePrintList() const {
   DllNode* current = tail;
   while(current != nullptr) {
     current->printNode();

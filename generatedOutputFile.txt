@@ -1,0 +1,292 @@
+
+Processing commands:
+
+
+Processing testCase1
+
+Calling isEmpty().
+isEmpty returned: 1
+Calling insertAtHead(50).
+Successfully inserted at head: 50
+Calling insertAtHead(40).
+Successfully inserted at head: 40
+Calling insertAtHead(30).
+Successfully inserted at head: 30
+Calling insertAtTail(60).
+Successfully inserted at tail: 60
+Calling insertAtTail(70).
+Successfully inserted at tail: 70
+Calling insertAtTail(80).
+Successfully inserted at tail: 80
+Calling insertAtTail(90).
+Successfully inserted at tail: 90
+Calling insertAtHead(20).
+Successfully inserted at head: 20
+Calling insertAtHead(10).
+Successfully inserted at head: 10
+Calling insertAtTail(100).
+Successfully inserted at tail: 100
+Calling isEmpty().
+isEmpty returned: 0
+Node key: 10
+Node key: 20
+Node key: 30
+Node key: 40
+Node key: 50
+Node key: 60
+Node key: 70
+Node key: 80
+Node key: 90
+Node key: 100
+Node key: 100
+Node key: 90
+Node key: 80
+Node key: 70
+Node key: 60
+Node key: 50
+Node key: 40
+Node key: 30
+Node key: 20
+Node key: 10
+
+Successfully processed: testCase1
+Node key: 10
+Node key: 20
+Node key: 30
+Node key: 40
+Node key: 50
+Node key: 60
+Node key: 70
+Node key: 80
+Node key: 90
+Node key: 100
+Node key: 100
+Node key: 90
+Node key: 80
+Node key: 70
+Node key: 60
+Node key: 50
+Node key: 40
+Node key: 30
+Node key: 20
+Node key: 10
+
+Processing testCase2
+
+Calling isEmpty().
+isEmpty returned: 1
+Calling insertAtHead(30).
+Successfully inserted at head: 30
+Calling remove(30)
+Successfully removed: 30
+Calling insertAtTail(40).
+Successfully inserted at tail: 40
+Calling insertAtHead(50).
+Successfully inserted at head: 50
+Calling insertAtTail(70).
+Successfully inserted at tail: 70
+Calling insertAtHead(80).
+Successfully inserted at head: 80
+Calling insertAtHead(1000).
+Successfully inserted at head: 1000
+Calling remove(70)
+Successfully removed: 70
+Calling isEmpty().
+isEmpty returned: 0
+Node key: 1000
+Node key: 80
+Node key: 50
+Node key: 40
+Node key: 40
+Node key: 50
+Node key: 80
+Node key: 1000
+
+Successfully processed: testCase2
+Node key: 1000
+Node key: 80
+Node key: 50
+Node key: 40
+Node key: 40
+Node key: 50
+Node key: 80
+Node key: 1000
+
+Processing testCase3
+
+Calling isEmpty().
+isEmpty returned: 1
+Calling insertAtHead(80).
+Successfully inserted at head: 80
+Calling remove(30)
+Successfully removed: 30
+Calling insertAtTail(40).
+Successfully inserted at tail: 40
+Calling insertAtHead(50).
+Successfully inserted at head: 50
+Calling removeHeaderNode()
+Successfully called removeHeaderNode.
+Calling insertAtTail(70).
+Successfully inserted at tail: 70
+Calling insertAtHead(180).
+Successfully inserted at head: 180
+Calling insertAtHead(1000).
+Successfully inserted at head: 1000
+Calling removeTailNode()
+Successfully called removeTailNode.
+Calling remove(50)
+Successfully removed: 50
+Calling isEmpty().
+isEmpty returned: 0
+Node key: 1000
+Node key: 180
+Node key: 80
+Node key: 40
+Node key: 40
+Node key: 80
+Node key: 180
+Node key: 1000
+
+Successfully processed: testCase3
+Node key: 1000
+Node key: 180
+Node key: 80
+Node key: 40
+Node key: 40
+Node key: 80
+Node key: 180
+Node key: 1000
+
+Processing testCase4
+
+Calling isEmpty().
+isEmpty returned: 1
+Calling insertAtHead(10).
+Successfully inserted at head: 10
+Calling moveNodeToTail(10)
+Successfully moved node to tail: 10
+Calling insertAtTail(40).
+Successfully inserted at tail: 40
+Calling insertAtHead(50).
+Successfully inserted at head: 50
+Calling moveNodeToTail(50)
+Successfully moved node to tail: 50
+Calling insertAtTail(70).
+Successfully inserted at tail: 70
+Calling moveNodeToHead(70)
+Successfully moved node to head: 70
+Calling insertAtHead(180).
+Successfully inserted at head: 180
+Calling insertAtHead(1000).
+Successfully inserted at head: 1000
+Calling removeTailNode()
+Successfully called removeTailNode.
+Calling remove(180)
+Successfully removed: 180
+Calling insertAtHead(100).
+Successfully inserted at head: 100
+Calling insertAtHead(10000).
+Successfully inserted at head: 10000
+Calling removeHeaderNode()
+Successfully called removeHeaderNode.
+Calling isEmpty().
+isEmpty returned: 0
+Node key: 100
+Node key: 1000
+Node key: 70
+Node key: 10
+Node key: 40
+Node key: 40
+Node key: 10
+Node key: 70
+Node key: 1000
+Node key: 100
+
+Successfully processed: testCase4
+Node key: 100
+Node key: 1000
+Node key: 70
+Node key: 10
+Node key: 40
+Node key: 40
+Node key: 10
+Node key: 70
+Node key: 1000
+Node key: 100
+
+Processing testCase5
+
+Calling isEmpty().
+isEmpty returned: 1
+Calling insertAtHead(34).
+Successfully inserted at head: 34
+Calling insertAtHead(10000).
+Successfully inserted at head: 10000
+Calling removeHeaderNode()
+Successfully called removeHeaderNode.
+Calling insertAtTail(987).
+Successfully inserted at tail: 987
+Calling insertAtTail(23).
+Successfully inserted at tail: 23
+Calling insertAtTail(9).
+Successfully inserted at tail: 9
+Calling moveNodeToHead(9)
+Successfully moved node to head: 9
+Calling moveNodeToTail(987)
+Successfully moved node to tail: 987
+Calling remove(987)
+Successfully removed: 987
+Calling removeTailNode()
+Successfully called removeTailNode.
+Calling insertAtHead(42).
+Successfully inserted at head: 42
+Calling insertAtHead(23).
+Successfully inserted at head: 23
+Calling insertAtHead(67).
+Successfully inserted at head: 67
+Calling insertAtHead(80).
+Successfully inserted at head: 80
+Calling insertAtHead(53).
+Successfully inserted at head: 53
+Calling insertAtHead(86).
+Successfully inserted at head: 86
+Calling moveNodeToHead(34)
+Successfully moved node to head: 34
+Calling moveNodeToHead(9)
+Successfully moved node to head: 9
+Calling isEmpty().
+isEmpty returned: 0
+Node key: 9
+Node key: 34
+Node key: 86
+Node key: 53
+Node key: 80
+Node key: 67
+Node key: 23
+Node key: 42
+Node key: 42
+Node key: 23
+Node key: 67
+Node key: 80
+Node key: 53
+Node key: 86
+Node key: 34
+Node key: 9
+
+Successfully processed: testCase5
+Node key: 9
+Node key: 34
+Node key: 86
+Node key: 53
+Node key: 80
+Node key: 67
+Node key: 23
+Node key: 42
+Node key: 42
+Node key: 23
+Node key: 67
+Node key: 80
+Node key: 53
+Node key: 86
+Node key: 34
+Node key: 9

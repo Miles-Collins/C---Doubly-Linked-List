@@ -34,7 +34,7 @@ public:
     DoublyLinkedList();  ///< Constructor: Initializes an empty list.
     ~DoublyLinkedList(); ///< Destructor: Deletes all nodes.
 
-    bool isEmpty();                         ///< Checks if the list is empty.
+    bool isEmpty() const;                         ///< Checks if the list is empty.
     void insertAtHead(int key);             ///< Inserts a node at the head.
     void insertAtTail(int key);             ///< Inserts a node at the tail.
     void remove(int key);                   ///< Removes a node with a specific key.
@@ -43,8 +43,8 @@ public:
     void moveNodeToHead(int key);           ///< Moves a node to the head.
     void moveNodeToTail(int key);           ///< Moves a node to the tail.
     void clear();                           ///< Deletes all nodes.
-    void printList();                       ///< Prints the list from head to tail.
-    void reversePrintList();                ///< Prints the list from tail to head.
+    void printList() const;                       ///< Prints the list from head to tail.
+    void reversePrintList() const;                ///< Prints the list from tail to head.
 };
 
 #endif // DOUBLY_LINKED_LIST_H
